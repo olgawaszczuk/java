@@ -13,17 +13,26 @@ public class CsvFileParser implements Serializable {
         obiektOut = null;
     }
 
-    public String readString() throws IOException {
+   public String readString() throws IOException {
         BufferedReader in =
                 new BufferedReader(
                         new FileReader(obiektIn));
-        char c;
-        StringBuffer strng = new StringBuffer();
-        while ((c = (char) in.read()) != (char) -1)//'\n')
-            strng.append(c);
-        strng.append('\n');
-        in.close();
-        stringMatrix = strng.toString();
+        try{
+            char c;
+            StringBuffer strng = new StringBuffer();
+            while ((c = (char) in.read()) != (char) -1)//'\n')
+                strng.append(c);
+            strng.append('\n');
+            in.close();
+            stringMatrix = strng.toString();
+        }
+        catch (FileNotFoundException e)
+        {
+            System.out.println("Nie można znaleźć pliku. " +
+                    "Została podana błędna nazwa lub plik nie znajduje się w folderze projektu.");
+
+        }
+
         return stringMatrix;
 
     }
